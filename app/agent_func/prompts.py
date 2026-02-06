@@ -90,7 +90,7 @@ def summary_prompt():
         With those information create a nicely and professionaly analysis. Don't summarize but change the format of user input. Include all the information, but shorten the amount of words if it is possible.
          Don't respond with question.
          The current date is {datetime.datetime.now().strftime('%Y-%m-%d')}. Include this whole date in a nicely formated way in this html. Response with a single html line. Don't use \\n or Unicode escapes (so u2014 or u2015 for example).
-         create this html in a div.
+         create this html in a div. Use colors such like #0047AB #F9F6EE and whatever you think is fitting based on the analysis information
         """
     human_prompt= "Here are all the analyses of the stocks provided by me. Summarize all of them in a nicely HTML format."
 

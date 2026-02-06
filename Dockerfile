@@ -12,6 +12,6 @@ RUN apt-get update && apt-get install -y \
 COPY pyproject.toml .
 COPY app /app/app
 RUN pip install .
-RUN playwright install chromium
+RUN python -m playwright install --with-deps chromium
 
-CMD ["gunicorn","-b","0.0.0.0:8080","app.wsgi:app"]
+CMD ["gunicorn","-b","0.0.0.0:8080","--timeout", "200","app.wsgi:app"]

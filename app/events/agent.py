@@ -15,6 +15,7 @@ from langgraph.prebuilt import ToolNode
 
 from playwright.async_api import async_playwright
 from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
+import os
 
 class StockAgent:
 
@@ -36,12 +37,14 @@ class StockAgent:
 
         toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
         tools = toolkit.get_tools()
-
+        env = os.environ.copy()
+        env["SERPER_API_KEY"] = os.environ["SERPER_API_KEY"]
         mcp_client = MultiServerMCPClient({
             "simple-web-search-server": {
                 "transport": "stdio",
                 "command": "python",
                 "args": ["-m","app.agent_func.mcp"],
+                "env":env
             }
         }
         )
@@ -111,7 +114,6 @@ class StockAgent:
 
             if isinstance(oldState["messages"][-1], ToolMessage):
                 current_messages_worker = oldState['current_messages_worker'] + find_all_tool_messages(oldState["messages"])
-                print(oldState["current_messages_worker"])
                 response = self.llm_with_tools.invoke(current_messages_worker)
                 current_messages_worker = current_messages_worker + [response]
                 return {"messages": [response],
@@ -139,7 +141,7 @@ class StockAgent:
             if systemMessagePresent:
                 messages = oldState["current_messages_worker"] + [human_message]
                 response = self.llm_with_tools.invoke(messages)
-                response=[messages,response]
+                response= messages + [response]
             else:
                 messages=[system_message, human_message]
                 response = self.llm_with_tools.invoke(messages)
@@ -224,6 +226,7 @@ class StockAgent:
             result = await graph_compiled.ainvoke({"messages":[HumanMessage(content=message)], "analysis_completed":False}, {"recursion_limit":150})
             result = str(result["messages"][-1].content)
             return result
-        except:
+        except Exception as e:
+            print(e)
             raise AgentError("Right now the agentic AI is not available, please try later")
         

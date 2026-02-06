@@ -8,7 +8,6 @@ import requests
 from dotenv import load_dotenv
 load_dotenv()
 
-
 mcp = FastMCP("simple-web-search-server")
 
 @mcp.tool()
@@ -18,7 +17,6 @@ async def search_web(query: str) -> str:
         query: the query which will be used to search the web
     """
     api_key = os.getenv("SERPER_API_KEY")
-    
     url = "https://google.serper.dev/search"
     payload = {
         "q": query,

@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  agent:
+    env_file:
+      - .env
+    image: agent:latest
+    restart: always
+    ports:
+      - '8080:8080'
