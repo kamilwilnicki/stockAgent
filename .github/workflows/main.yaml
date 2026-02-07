@@ -31,6 +31,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
             docker build -t ${{ env.DOCKER_IMAGE_URL}}:latest -f Dockerfile .
+            gcloud auth configure-docker us-east1-docker.pkg.dev
             docker push ${{ env.DOCKER_IMAGE_URL }}:latest
       #     echo SERVICE_NAME $SERVICE_NAME
       #     gcloud run deploy $SERVICE_NAME \
