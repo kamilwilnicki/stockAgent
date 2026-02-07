@@ -40,7 +40,7 @@ jobs:
               --timeout 3m \
               --port 8080 \
               --no-allow-unauthenticated \
-              --memory 2Gi \
+              --memory 4Gi \
               --cpu 2 \
               --set-secrets="\
               OPENAI_API_KEY=OPENAI_API_KEY:latest,\
