@@ -24,18 +24,27 @@ jobs:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
           project_id: ${{ env.PROJECT_ID }}
 
-      - name: Configure Docker
-        run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev
-
       - name: Build and Push Docker Image
         run: |
             docker build -t ${{ env.DOCKER_IMAGE_URL}}:latest -f Dockerfile .
             gcloud auth configure-docker us-east1-docker.pkg.dev
             docker push ${{ env.DOCKER_IMAGE_URL }}:latest
-      #     echo SERVICE_NAME $SERVICE_NAME
-      #     gcloud run deploy $SERVICE_NAME \
-      #       --image ${{ env.DOCKER_IMAGE_URL}}:latest \
-      #       --platform managed \
-      #       --region us-east1 \
-
+      - name: Deploy to Cloud Run
+        run: |
+            echo SERVICE_NAME $SERVICE_NAME
+            gcloud run deploy $SERVICE_NAME \
+              --image ${{ env.DOCKER_IMAGE_URL}}:latest \
+              --platform managed \
+              --region us-east1 \
+              --max-instances 2 \
+              --timeout 3m \
+              --port 8080 \
+              --no-allow-unauthenticated \
+              --set-secrets="\
+              OPENAI_API_KEY=OPENAI_API_KEY:latest,\
+              LANGSMITH_API_KEY=LANGSMITH_API_KEY:latest,\
+              SERPER_API_KEY=SERPER_API_KEY:latest,\
+              LANGSMITH_PROJECT=LANGSMITH_PROJECT:latest" \
+              --set-env-vars="\
+              LANGSMITH_TRACING=true,\
+              LANGSMITH_ENDPOINT=https://api.smith.langchain.com"
