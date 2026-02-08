@@ -37,7 +37,7 @@ jobs:
               --platform managed \
               --region us-east1 \
               --max-instances 2 \
-              --timeout 3m \
+              --timeout 6m \
               --port 8080 \
               --no-allow-unauthenticated \
               --memory 4Gi \
