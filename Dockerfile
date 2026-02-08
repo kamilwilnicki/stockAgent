@@ -17,4 +17,4 @@ RUN python -m playwright install --with-deps chromium
 
 COPY app /app/app
 
-CMD ["gunicorn","-b","0.0.0.0:8080","--timeout", "200","app.wsgi:app"]
+CMD ["gunicorn","-b","0.0.0.0:8080","--timeout", "360","app.wsgi:app"]
