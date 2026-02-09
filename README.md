@@ -26,11 +26,11 @@ If the input is invalid (too many stocks or unrelated to stocks), the agent stop
 
 ### 🧠 AI / Agent Frameworks
 - **LangChain** – used for building LLM-powered agents, prompt execution, and tool orchestration  
-- **LangGraph** – used to model the agent workflow as a graph with explicit states and transitions  
-- **MCP (Multi-Component Process)** – custom agent coordination layer implementing:
+- **LangGraph** – used to model the agent workflow as a graph with explicit states and transitions
   - guardrail validation
   - iterative worker → evaluator loops
   - cost-aware stopping conditions
+- **MCP (Multi-Component Process)**
 
 ---
 
