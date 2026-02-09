@@ -3,12 +3,6 @@
 **stockAgent** is an AI-powered stock analysis backend application written in Python.  
 It implements a **multi-agent workflow** that validates user input, performs stock market research, evaluates analysis quality, and produces a final, well-formatted HTML report.
 
-The project showcases:
-- agent-based architecture
-- prompt engineering
-- CI/CD automation
-- Dockerized deployment
-
 ---
 
 ## 🧠 What Does the Agent Do?
@@ -28,9 +22,28 @@ If the input is invalid (too many stocks or unrelated to stocks), the agent stop
 
 ![Architecture diagram](images/architecture.png)
 
+## 🛠️ Technologies Used
+
+### 🧠 AI / Agent Frameworks
+- **LangChain** – used for building LLM-powered agents, prompt execution, and tool orchestration  
+- **LangGraph** – used to model the agent workflow as a graph with explicit states and transitions  
+- **MCP (Multi-Component Process)** – custom agent coordination layer implementing:
+  - guardrail validation
+  - iterative worker → evaluator loops
+  - cost-aware stopping conditions
+
+---
+
+### 🔗 LLM & Prompt Engineering
+- **Prompt Engineering** – structured, role-based prompts with strict output schemas
+- **Guardrails** – early termination rules for invalid or out-of-scope inputs
+- **Evaluator Pattern** – automated quality control and retry feedback loop
+- **HTML Output Generation** – LLM-generated, frontend-ready reports
+
+
 ## ⚙️ Installation (Local)
 
-bash
+```bash
 git clone https://github.com/kamilwilnicki/stockAgent.git
 cd stockAgent
 python -m venv .venv
